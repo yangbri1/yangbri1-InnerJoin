@@ -1,0 +1,44 @@
+-- Sometimes we want to query results from multiple tables. We can achieve this by doing a JOIN to include data from
+-- other tables. There are several types of joins. INNER JOIN is when we query two tables on some
+-- criteria, and only see results where there are matching rows in all tables. This follows the format:
+--      SELECT * FROM table_left INNER JOIN table_right ON table_left.column1 = table_right.column3;
+-- The condition in the "ON" statement must be fulfilled to combine the two rows into a single result.
+-- Take the following tables for class and student.
+--      class table
+--      | id | teacher_name  |class_title|
+--      | -- | ------------- | --------- |
+--      |1   |'Ms. Lovelace' |'Physics'  |
+--      |2   |'Ms. Lovelace' |'Math'     |
+--      |3   |'Mr. McCarthy' |'Writing'  |
+--      |4   |'Ms. Goodall'  |'Biology'  |
+--      student table
+--      | id |   student_name    |class_title|
+--      | -- | ----------------- | --------- |
+--      |1   |'John Stewart'     |'Writing'  |
+--      |2   |'Stephen Colbert'  |'Physics'  |
+--      |3   |'Samantha Bee'     |'Math'     |
+--      |4   |'Aasif Mandvi'     |'Writing'  |
+--      |5   |'Robert Riggle'    |'Physics'  |
+--      |6   |'Jessica Williams' |'Art'      |
+-- We can query these tables with an INNER JOIN ON the "class" column in each table:
+--      SELECT * FROM class INNER JOIN student ON class.class_title = students.class_title;
+-- The output of the join would create the following result set:
+--      | class.id | class.teacher_name | class.class_title | student.id | student.student_name | student.class_title |
+--      |----------|--------------------|-------------------|-------------|----------------------|---------------------|
+--      | 1        | 'Ms. Lovelace'     | 'Physics'         | 2           | 'Stephen Colbert'    | 'Physics'           |
+--      | 1        | 'Ms. Lovelace'     | 'Physics'         | 5           | 'Robert Riggle'      | 'Physics'           |
+--      | 2        | 'Ms. Lovelace'     | 'Math'            | 3           | 'Samantha Bee'       | 'Math'              |
+--      | 3        | 'Mr. McCarthy'     | 'Writing'         | 1           | 'John Stewart'       | 'Writing'           |
+--      | 3        | 'Mr. McCarthy'     | 'Writing'         | 4           | 'Aasif Mandvi'       | 'Writing'           |
+-- NOTE: Both the classes of Ms. Goodall and student Jessica Williams would not be included in the results. This is because
+-- there is no matching record in the opposite table for either of those records. (There is no art teacher, and there
+-- are no students taking biology.)
+
+-- TODO: Write a query that will return the id and student_name of each of Ms. Lovelace's students.
+-- Ms. Lovelace teaches two classes, but the classes she teaches aren't known from the data in the student
+-- table. This means that you will need a way to combine the data from the two tables (inner join). You will
+-- need to simultaneously filter those results WHERE class.teacher_name = student.student_name to retrieve only
+-- her students from the resultset shown above.
+-- Note: There should not be a wild card (*) in your statement. You will need to specify the columns in your statement
+-- by writing columns in the format table.column (for instance, student.class_title), because the column names may be
+-- ambiguous between class and student; this is necessary for the tests to parse your resultset.
